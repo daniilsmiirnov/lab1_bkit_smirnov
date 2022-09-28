@@ -9,6 +9,8 @@ def coef ( index, name_coef):
     try:
 
         coef_str = sys.argv[index]
+        if ((index==1) and (coef_str=='0')):
+            coef_str=1/0
         coef = float(coef_str)
 
 
@@ -29,15 +31,27 @@ def coef ( index, name_coef):
     return coef
 def counting(A,B,C):
     result = []
+
     D=B*B-4*A*C
+    t1=((-B)+ math.sqrt(D)) / (2 * A)
+    t2=((-B)+ math.sqrt(D)) / (2 * A)
     if (D==0):
-        x1=(-B)/(2*A)
-        result.append(x1)
+        if t1>=0:
+            x1=(-B)/(2*A)
+            result.append(x1)
     if (D > 0):
-        x2 = ((-B)+ math.sqrt(D)) / (2 * A)
-        x3 = ((-B) - math.sqrt(D)) / (2 * A)
-        result.append(x2)
-        result.append(x3)
+            if t1>=0:
+                x2 = -math.sqrt(t1)
+                x3 = math.sqrt(t1)
+                result.append(x2)
+                result.append(x3)
+            if t2 >= 0:
+                x4 = -math.sqrt(t2)
+                x5 = math.sqrt(t2)
+                if (x4!=x2):
+                    result.append(x4)
+                if (x5!=x3):
+                    result.append(x5)
     return result
 
 
@@ -53,7 +67,9 @@ def main():
     if len(result)==1:
         print("Один корень:",result[0])
     if len(result) == 2:
-        print("Два корня:",result[0],result[1])
+        print("Два корня:", result[0], result[1])
+    if len(result) == 4:
+        print("Четыре корня:",result[0],result[1],result[2],result[3])
 
 
 
